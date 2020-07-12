@@ -1,13 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swadeshiandolan/firebase/database.dart';
 import 'package:swadeshiandolan/models/item.dart';
-import 'package:swadeshiandolan/pages/apppage.dart';
 import 'package:swadeshiandolan/pages/frontpage/footer.dart';
 import 'package:swadeshiandolan/pages/frontpage/middle.dart';
 import 'package:swadeshiandolan/utils/colors.dart';
 import 'package:swadeshiandolan/widgets/item1.dart';
-import 'package:swadeshiandolan/widgets/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -21,6 +18,7 @@ class FirstScreen extends StatefulWidget {
 class _FirstScreenState extends State<FirstScreen>
     with TickerProviderStateMixin {
   TabController _tabController;
+
   List<Tab> tabList = [
     new Tab(text: 'Social'),
     new Tab(text: 'Chatting'),
@@ -52,14 +50,15 @@ class _FirstScreenState extends State<FirstScreen>
         backgroundColor: Coolors.primaryColor,
         body: SingleChildScrollView(
           child: Column(children: <Widget>[
-            Navbar(),
             HeaderScreen(),
             if (context.isMobile) IntroductionWidget().p16(),
             MiddleScreen(),
             tabBar(),
             FooterScreen(),
+
           ]),
-        ));
+        )
+        );
   }
 
   Widget itemsList(String item) {

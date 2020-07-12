@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class HeaderScreen extends StatelessWidget {
+  
   @override
   Widget build(BuildContext context) {
     
@@ -58,7 +59,7 @@ class HeaderScreen extends StatelessWidget {
           ],
         )
       ]))
-          .size(context.screenWidth, context.percentHeight * 60)
+          .size(context.screenWidth*100, context.percentHeight * 60)
           .color(Coolors.primaryColor)
           .make(),
     );
@@ -95,18 +96,8 @@ class IntroductionWidget extends StatelessWidget {
   }
 }
 
-class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Icon(Icons.thumb_up);
-  }
-}
-
 class PictureWidget extends StatelessWidget {
+  
   const PictureWidget({
     Key key,
   }) : super(key: key);
@@ -114,7 +105,7 @@ class PictureWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Transform(
-      alignment: Alignment.center,
+      alignment: context.isMobile ? Alignment.center : Alignment.centerRight,
       origin: Offset(context.percentWidth * 16, 0),
       transform: Matrix4.rotationY(pi),
       child: Image.asset(

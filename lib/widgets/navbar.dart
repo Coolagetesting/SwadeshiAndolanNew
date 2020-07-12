@@ -10,14 +10,77 @@ import '../utils/universal_variable.dart';
 class Navbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        if (constraints.maxWidth > 900) {
-          return DesktopNavbar();
-        } else {
-          return MobileNavbar();
-        }
-      },
+    return AppBar(
+        title: Image.asset(
+            "assets/swadeshiandolan.png",
+            height: 100,
+            width: 300,
+          ),
+          actions: [
+                          MaterialButton(
+                onPressed: () {},
+                child: Text(
+                  "Home",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              SizedBox(
+                width: 30,
+              ),
+              MaterialButton(
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (_) => AppPage()));
+                },
+                child: Text(
+                  'Apps',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              SizedBox(
+                width: 30,
+              ),
+              MaterialButton(
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (_) => ReasonPage()));
+                },
+                child: Text(
+                  'Reason',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              SizedBox(
+                width: 30,
+              ),
+              GestureDetector(
+                onTap: () => showModalBottomSheet(
+                  context: context,
+                  backgroundColor: UniversalVariables.blackColor,
+                  builder: (context) => AboutPage(),
+                  isScrollControlled: true,
+                ),
+                child: Text(
+                  'About',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              SizedBox(
+                width: 30,
+              ),
+              MaterialButton(
+                color: Colors.pink,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                onPressed: () {
+                  launch("https://coolage.app");
+                },
+                child: Text(
+                  "Visit Coolage",
+                  style: TextStyle(color: Colors.white),
+                ),
+              )
+          ],
     );
   }
 }

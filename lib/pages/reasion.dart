@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:swadeshiandolan/utils/colors.dart';
 
 class ReasonPage extends StatefulWidget {
   final Widget child;
@@ -162,14 +163,8 @@ class _ReasonPageState extends State<ReasonPage> {
         length: 3,
         child: Scaffold(
           appBar: GradientAppBar(
-            leading: IconButton(
-                icon: Icon(Icons.arrow_back),
-                onPressed: () {
-                  Navigator.pop(context);
-                }),
-            backgroundColorStart: Colors.orangeAccent,
-            backgroundColorEnd: Colors.green,
-            //backgroundColor: Color(0xff308e1c),
+            backgroundColorStart: Coolors.primaryColor,
+            backgroundColorEnd: Coolors.secondaryColor,
             bottom: TabBar(
               indicatorColor: Color(0xff9962D0),
               tabs: [
@@ -180,8 +175,6 @@ class _ReasonPageState extends State<ReasonPage> {
                 Tab(icon: Icon(FontAwesomeIcons.chartLine)),
               ],
             ),
-            centerTitle: true,
-            title: Text("Reason"),
           ),
           body: TabBarView(
             children: [
