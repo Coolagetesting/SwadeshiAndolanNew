@@ -1,6 +1,7 @@
-import 'package:swadeshiandolan/pages/items_list_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:swadeshiandolan/firebase/database.dart';
+import 'package:swadeshiandolan/models/item.dart';
 import 'package:swadeshiandolan/widgets/item1.dart';
-import 'package:swadeshiandolan/widgets/item2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,7 @@ class AppContainer extends StatefulWidget {
 }
 
 class _AppContainerState extends State<AppContainer> {
+  
   final List<String> menuItems = [
     "Social",
     "Chatting",
@@ -57,78 +59,6 @@ class _AppContainerState extends State<AppContainer> {
 
   int selectedMenuItem = 0;
 
-  String pageTitle = "Social App";
-
-  Widget pageContent = ListView(
-    padding: EdgeInsets.only(left: 10, right: 70),
-    scrollDirection: Axis.vertical,
-    children: <Widget>[
-      Center(
-        child: Text(
-          "Social App Alternative",
-          style: TextStyle(
-              color: Colors.red, fontSize: 30, fontWeight: FontWeight.bold),
-        ),
-      ),
-      Item1(
-          name: 'Hike',
-          rating: '4.5',
-          usersNo: '181,861',
-          type: 'Free',
-          imageUrl: 'assets/images/Apps/chatting/hike.jpeg',
-          review: 'Viansh Malik ★★★★★',
-          reviewer:
-              'The application has amazing concept but a lot of bugs. For example in home when you call, only the owners voice is clearly audible. '),
-      Item2(
-          name: 'Likee',
-          rating: '4.6',
-          usersNo: '136',
-          type: 'Free',
-          imageUrl: 'assets/images/Apps/chatting/likee.png',
-          review: 'Karan Ravat ★★★★★',
-          reviewer: 'It'
-              's a very good application to connect with the people easily but a small problem in video call when We do a video call to anyone then it'
-              's show error. otherwise it'
-              's very nice 😊'),
-      Item1(
-          name: 'sharechat',
-          rating: '4.5',
-          usersNo: '181,861',
-          type: 'Free',
-          imageUrl: 'assets/images/Apps/chatting/sharechat.png',
-          review: 'Viansh Malik ★★★★★',
-          reviewer:
-              'The application has amazing concept but a lot of bugs. For example in home when you call, only the owners voice is clearly audible. '),
-      Item2(
-          name: 'Kwai',
-          rating: '4.5',
-          usersNo: '181,861',
-          type: 'Free',
-          imageUrl: 'assets/images/Apps/chatting/kwai.png',
-          review: 'Viansh Malik ★★★★★',
-          reviewer:
-              'The application has amazing concept but a lot of bugs. For example in home when you call, only the owners voice is clearly audible. '),
-      Item1(
-          name: 'Snapchat',
-          rating: '4.5',
-          usersNo: '181,861',
-          type: 'Free',
-          imageUrl: 'assets/images/Apps/chatting/Snapchat.jpeg',
-          review: 'Viansh Malik ★★★★★',
-          reviewer:
-              'The application has amazing concept but a lot of bugs. For example in home when you call, only the owners voice is clearly audible. '),
-      Item2(
-          name: 'Hago',
-          rating: '4.5',
-          usersNo: '181,861',
-          type: 'Free',
-          imageUrl: 'assets/images/Apps/chatting/Hago.png',
-          review: 'Viansh Malik ★★★★★',
-          reviewer:
-              'The application has amazing concept but a lot of bugs. For example in home when you call, only the owners voice is clearly audible. '),
-    ],
-  );
-
   void setSidebarState() {
     setState(() {
       xOffset = sidebarOpen ? 265 : 60;
@@ -137,77 +67,26 @@ class _AppContainerState extends State<AppContainer> {
     });
   }
 
-  void setPageTitle() {
-    switch (selectedMenuItem) {
-      case 0:
-        pageTitle = "Social App";
-        break;
-      case 1:
-        pageTitle = "Chatting";
-        break;
-      case 2:
-        pageTitle = "Shopping";
-        break;
-      case 3:
-        pageTitle = "Scanning";
-        break;
-      case 4:
-        pageTitle = "Office";
-        break;
-      case 5:
-        pageTitle = "Music";
-        break;
-      case 6:
-        pageTitle = "Browsers";
-        break;
-      case 7:
-        pageTitle = "Games";
-        break;
-      case 8:
-        pageTitle = "News";
-        break;
-      case 9:
-        pageTitle = "Security";
-        break;
-      case 10:
-        pageTitle = "Finance";
-        break;
-      case 11:
-        pageTitle = "Mail";
-        break;
-      case 12:
-        pageTitle = "Utility";
-        break;
-      case 13:
-        pageTitle = "Video Calling";
-        break;
-      case 14:
-        pageTitle = "File_Sharing";
-        break;
-      case 15:
-        pageTitle = "Video_Editing";
-        break;
-      case 16:
-        pageTitle = "Photo_Editing";
-        break;
-    }
-  }
-
-  void setPageContent() {
-    switch (selectedMenuItem) {
-      case 0:
-        pageContent = ItemsListPage();
-        break;
-      case 1:
-        pageContent = ChattingItemList();
-        break;
-      case 2:
-        pageContent = ItemsListPage();
-        break;
-      case 3:
-        pageContent = ItemsListPage();
-        break;
-    }
+  Widget itemsList() {
+    return StreamBuilder(
+      stream: itemsRef.document('Apps').collection(menuItems[selectedMenuItem]).snapshots(),
+      builder: (context, snapshot) {
+        return (snapshot.hasData && snapshot.data.documents.length > 0)
+            ? ListView.builder(
+                itemCount: snapshot.data.documents.length,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot doc = snapshot.data.documents[index];
+                  Item itemModel = Item.fromDocument(doc);
+                  return Item1(
+                    item : itemModel
+                  );
+                },
+              )
+            : Container(
+              child: Text('No Data Available'),
+            );
+      },
+    );
   }
 
   @override
@@ -264,8 +143,6 @@ class _AppContainerState extends State<AppContainer> {
                                   sidebarOpen = false;
                                   selectedMenuItem = index;
                                   setSidebarState();
-                                  setPageTitle();
-                                  setPageContent();
                                 },
                                 child: MenuItem(
                                   itemIcon: menuIcons[index],
@@ -320,7 +197,7 @@ class _AppContainerState extends State<AppContainer> {
                               top: 5,
                             ),
                             child: Text(
-                              pageTitle,
+                              menuItems[selectedMenuItem],
                               style: TextStyle(
                                 fontSize: 18,
                               ),
@@ -328,7 +205,7 @@ class _AppContainerState extends State<AppContainer> {
                       ],
                     )),
                 Expanded(
-                  child: pageContent,
+                  child: itemsList(),
                 )
               ],
             ),

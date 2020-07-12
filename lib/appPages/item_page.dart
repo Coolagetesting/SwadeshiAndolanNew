@@ -251,7 +251,6 @@ class _ItemPageState extends State<ItemPage> {
                 ),
               ),
               Divider(),
-
               /// Review
               Padding(
                 padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),

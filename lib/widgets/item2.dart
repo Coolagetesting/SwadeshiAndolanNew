@@ -1,17 +1,12 @@
 import 'package:swadeshiandolan/appPages/item_page.dart';
 import 'package:flutter/material.dart';
+import 'package:swadeshiandolan/models/item.dart';
 
 class Item2 extends StatelessWidget {
-  final String name, rating, usersNo, type, imageUrl, reviewer, review;
+  final Item item;
 
   Item2(
-      {this.name,
-      this.rating,
-      this.usersNo,
-      this.type,
-      this.imageUrl,
-      this.reviewer,
-      this.review});
+      {this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +52,7 @@ class Item2 extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      Text(name,
+                                      Text(item.name,
                                           style:
                                               TextStyle(color: Colors.white)),
                                       Row(
@@ -66,7 +61,7 @@ class Item2 extends StatelessWidget {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: <Widget>[
-                                          Text(rating,
+                                          Text(item.rating,
                                               style: TextStyle(
                                                   color: Colors.amber,
                                                   fontWeight: FontWeight.w700,
@@ -85,7 +80,7 @@ class Item2 extends StatelessWidget {
                                       Padding(
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 4.0),
-                                        child: Text(usersNo,
+                                        child: Text(item.usersNo,
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.w700)),
@@ -102,7 +97,7 @@ class Item2 extends StatelessWidget {
                                           color: Colors.green,
                                           child: Padding(
                                             padding: EdgeInsets.all(4.0),
-                                            child: Text(type,
+                                            child: Text(item.type,
                                                 style: TextStyle(
                                                     color: Colors.white)),
                                           ),
@@ -129,7 +124,9 @@ class Item2 extends StatelessWidget {
                             elevation: 20.0,
                             shadowColor: Color(0x802196F3),
                             shape: CircleBorder(),
-                            child: Image.asset(imageUrl),
+                            child: CircleAvatar(
+                              backgroundImage: NetworkImage(item.imageUrl)
+                            ),
                           ),
                         ),
                       ),
@@ -157,10 +154,10 @@ class Item2 extends StatelessWidget {
                 child: ListTile(
                   leading: CircleAvatar(
                     backgroundColor: Colors.purple,
-                    child: Text(reviewer.substring(0, 1)),
+                    child: Text(item.reviewer.substring(0, 1)),
                   ),
-                  title: Text(reviewer),
-                  subtitle: Text(review,
+                  title: Text(item.reviewer),
+                  subtitle: Text(item.review,
                       maxLines: 2, overflow: TextOverflow.ellipsis),
                 ),
               ),

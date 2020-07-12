@@ -8,6 +8,7 @@ import 'package:velocity_x/velocity_x.dart';
 class HeaderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    
     final nameWidget = "Support\nIndia."
         .text
         .orange600
@@ -58,7 +59,7 @@ class HeaderScreen extends StatelessWidget {
         )
       ]))
           .size(context.screenWidth, context.percentHeight * 60)
-          .color(Coolors.secondaryColor)
+          .color(Coolors.primaryColor)
           .make(),
     );
   }
